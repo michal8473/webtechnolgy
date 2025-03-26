@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Polish Recipes</title>
+    <style>
+        body { font-family: sans-serif; }
+        .recipe-container { width: 800px; margin: auto; }
+        img { width: 400px; height: 300px; }
+    </style>
+</head>
+<body>
+    <div class="recipe-container">
+        <h1>Polish Recipes</h1>
+        <h2>Pierogi Recipe</h2>
+        <img src="https://via.placeholder.com/400x300?text=Pierogi" alt="Pierogi">
+        <p>Classic Polish dish.</p>
+
+        <h3>Ingredients</h3>
+        <ul id="ingredients">
+            <li>2 cups flour</li>
+            <li>1 egg</li>
+            <li>1/2 cup water</li>
+            <li>1 cup potatoes</li>
+            <li>1/2 cup cheese</li>
+        </ul>
+        <button onclick="copyIng()">Copy</button>
+        <span id="copyMsg" style="color: green; display: none;">Copied!</span>
+
+        <h3>Timer</h3>
+        <input type="number" id="time" placeholder="Mins" min="1">
+        <button onclick="startT()">Start</button>
+        <p>Time: <span id="timeDisp">0:00</span></p>
+
+        <h3>Steps</h3>
+        <ol>
+            <li>Mix dough.</li>
+            <li>Cut circles.</li>
+            <li>Fill and seal.</li>
+            <li>Boil 5 min.</li>
+        </ol>
+
+        <a href="../index.html">Home</a>
+    </div>
+
+    <script>
+        function copyIng() {
+            var ing = document.getElementById("ingredients").innerText;
+            navigator.clipboard.writeText(ing).then(function() {
+                var msg = document.getElementById("copyMsg");
+                msg.style.display = "inline";
+                setTimeout(function() { msg.style.display = "none"; }, 2000);
+            });
+        }
+
+        var count;
+        function startT() {
+            clearInterval(count);
+            var mins = parseInt(document.getElementById("time").value) || 0;
+            var left = mins * 60;
+            var disp = document.getElementById("timeDisp");
+
+            count = setInterval(function() {
+                if (left <= 0) {
+                    clearInterval(count);
+                    disp.textContent = "Done!";
+                    return;
+                }
+                var m = Math.floor(left / 60);
+                var s = left % 60;
+                disp.textContent = m + ":" + (s < 10 ? '0' : '') + s;
+                left--;
+            }, 1000);
+        }
+    </script>
+</body>
+</html>
