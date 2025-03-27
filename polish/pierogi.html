@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Pierogi</title>
+    <style>
+        body { font-family: sans-serif; }
+        img { width: 300px; height: auto; }
+    </style>
+</head>
+<body>
+    <h1>Pierogi</h1>
+    <img src="https://images.unsplash.com/photo-1600585154340-be6161a56a0c" alt="Pierogi">
+    <h2>Ingredients</h2>
+    <ul id="ing">
+        <li>2 cups flour</li>
+        <li>1 egg</li>
+        <li>1/2 cup water</li>
+        <li>1 tsp salt</li>
+        <li>1 cup potatoes</li>
+        <li>1/2 cup cheese</li>
+        <li>1 onion (optional)</li>
+        <li>Salt, pepper</li>
+    </ul>
+    <button onclick="copy()">Copy</button>
+    <h2>Steps</h2>
+    <ol>
+        <li>Mix dough.</li>
+        <li>Rest 30 min.</li>
+        <li>Mix filling.</li>
+        <li>Cut circles.</li>
+        <li>Fill and seal.</li>
+        <li>Boil 3-5 min.</li>
+        <li>Fry (opt).</li>
+    </ol>
+    <h2>Timer</h2>
+    <input type="number" id="mins" placeholder="Mins">
+    <button onclick="start()">Start</button>
+    <p id="time"></p>
+    <p><a href="index.html">Back</a></p>
+
+    <script>
+        function copy() {
+            var text = document.getElementById('ing').innerText;
+            navigator.clipboard.writeText(text).then(function() {
+                alert('Copied!');
+            });
+        }
+
+        function start() {
+            var minutes = parseInt(document.getElementById('mins').value) || 0;
+            var seconds = minutes * 60;
+            var display = document.getElementById('time');
+            var timer = setInterval(function() {
+                var m = Math.floor(seconds / 60);
+                var s = seconds % 60;
+                display.textContent = m + ":" + (s < 10 ? '0' : '') + s;
+                if (seconds <= 0) {
+                    clearInterval(timer);
+                    display.textContent = 'Done!';
+                }
+                seconds--;
+            }, 1000);
+        }
+    </script>
+</body>
+</html>
